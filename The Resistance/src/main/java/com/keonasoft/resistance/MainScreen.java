@@ -11,6 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 
+/**
+ * @author kushal
+ * The first activity the app opens to when the app is started
+ * allows user to choose to start a new game or load a game
+ */
 public class MainScreen extends ActionBarActivity {
 
     @Override
