@@ -1,0 +1,1 @@
+Android game emulator for the Don Eskridge's popular board game 'The Resistance.' This is not meant to be an exact copy of the game and will contain a limited set of the game's features. It is meant purely for private use.
