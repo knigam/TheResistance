@@ -18,11 +18,11 @@ public class MainScreen extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
 
-        if (savedInstanceState == null) {
+        /*if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
-        }
+        }*/
     }
 
 
@@ -46,9 +46,9 @@ public class MainScreen extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
+ /*   *//**
      * A placeholder fragment containing a simple view.
-     */
+     *//*
     public static class PlaceholderFragment extends Fragment {
 
         public PlaceholderFragment() {
@@ -60,6 +60,6 @@ public class MainScreen extends ActionBarActivity {
             View rootView = inflater.inflate(R.layout.fragment_main_screen, container, false);
             return rootView;
         }
-    }
+    }*/
 
 }
