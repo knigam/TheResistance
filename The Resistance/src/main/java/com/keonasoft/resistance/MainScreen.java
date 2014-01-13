@@ -31,9 +31,29 @@ public class MainScreen extends ActionBarActivity {
         }*/
     }
 
+    /**
+     * Button OnClick listener for newGameBtn
+     * @param view
+     */
     public void newGameOnClick(View view){
         Intent intent = new Intent(MainScreen.this, MainGame.class);
         MainScreen.this.startActivity(intent);
+    }
+
+    /**
+     * Button OnClick listener for loadGameBtn
+     * @param view
+     */
+    public void loadGameOnClick(View view){
+
+    }
+
+    /**
+     * Button OnClick listener for customGameBtn
+     * @param view
+     */
+    public void customGameOnClick(View view){
+
     }
 
     /*

@@ -4,7 +4,6 @@ package com.keonasoft.resistance;
  * Created by kushal on 1/12/14.
  */
 public abstract class Game {
-    protected int numPlayers;
     protected int numResistance;
     protected int numSpies;
     protected int[] requiredAgents; //this is how many agents must go on each mission
@@ -13,14 +12,16 @@ public abstract class Game {
     protected int[] missionSuccess = new int[] {0,0,0,0,0}; //-1 means mission failed, 0 means mission hasn't started, 1 means succeeded
     protected int currRoundNum = 0;
     protected int currNumFails = 0; //The number of spies who chose to decline the mission
+    protected Player[] players;
 
     /**
      * constructor for a game with predefined values based on number of players
      * @param numPlayers
      */
     protected Game(int numPlayers){
-        this.numPlayers = numPlayers;
+        players = new Player[numPlayers];
         numMissions = 5;
+
 
         //This sets up default values from game rules based on number of players
         switch(numPlayers){
@@ -69,7 +70,7 @@ public abstract class Game {
      * @param numMissions
      */
     protected Game(int numPlayers, int numResistance, int numSpies, int[] requiredAgents, int[] numSpiesToFail, int numMissions){
-        this.numPlayers = numPlayers;
+        players = new Player[numPlayers];
         this.numResistance = numResistance;
         this.numSpies = numSpies;
         this.requiredAgents = requiredAgents;
@@ -77,5 +78,14 @@ public abstract class Game {
         this.numMissions = numMissions;
     }
 
+    /**
+     * setter method for players
+     * @param players
+     */
+    public void setPlayers(Player[] players) {
+        this.players = players;
+    }
+
     protected abstract void playGame();
+    protected abstract void createPlayerTypes(String[] playerNames);
 }

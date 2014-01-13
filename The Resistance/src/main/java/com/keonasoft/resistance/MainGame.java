@@ -23,6 +23,10 @@ import java.util.List;
  */
 public class MainGame extends ActionBarActivity {
     private Spinner gameTypeSpinner, numPlayersSpinner;
+    List<String> gameTypes;
+    List<Integer> numPlayersList;
+    int numPlayers;
+    String gameType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +42,18 @@ public class MainGame extends ActionBarActivity {
         }*/
     }
 
+    /**
+     * OnClick Button Listener for the next button in default game option screen
+     * @param view
+     */
     public void defaultOptionNextOnClick(View view){
+        Game game;
+        //Use if/else if statements to determine which game type to play
+        if (gameType.equals(gameTypes.get(0))){ //This is a normal game
+                game = new NormalGame(numPlayers);
+        }
+        else
+            game = new NormalGame(numPlayers);
 
     }
 
@@ -48,7 +63,7 @@ public class MainGame extends ActionBarActivity {
     private void setUpGameTypeSpinner(){
         gameTypeSpinner = (Spinner) findViewById(R.id.gameTypeSpinner);
 
-        List<String> gameTypes = new ArrayList<String>();
+        gameTypes = new ArrayList<String>();
         gameTypes.add("Normal");
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
@@ -59,11 +74,11 @@ public class MainGame extends ActionBarActivity {
         gameTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // TODO
+                gameType = gameTypes.get(position);
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
-                // TODO Auto-generated method stub
+                //Left empty because this is not necessary
             }});
     }
 
@@ -73,27 +88,27 @@ public class MainGame extends ActionBarActivity {
     private void setUpNumPlayerSpinner(){
         numPlayersSpinner = (Spinner) findViewById(R.id.numPlayersSpinner);
 
-        List<Integer> numPlayers = new ArrayList<Integer>();
-        numPlayers.add(5);
-        numPlayers.add(6);
-        numPlayers.add(7);
-        numPlayers.add(8);
-        numPlayers.add(9);
-        numPlayers.add(10);
+        numPlayersList = new ArrayList<Integer>();
+        numPlayersList.add(5);
+        numPlayersList.add(6);
+        numPlayersList.add(7);
+        numPlayersList.add(8);
+        numPlayersList.add(9);
+        numPlayersList.add(10);
 
         ArrayAdapter<Integer> dataAdapter = new ArrayAdapter<Integer>(this,
-                android.R.layout.simple_spinner_item, numPlayers);
+                android.R.layout.simple_spinner_item, numPlayersList);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         numPlayersSpinner.setAdapter(dataAdapter);
 
         numPlayersSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // TODO
+                numPlayers = numPlayersList.get(position);
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
-                // TODO Auto-generated method stub
+                //Left empty because this is not necessary
             }});
     }
 

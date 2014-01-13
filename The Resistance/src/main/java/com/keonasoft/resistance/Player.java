@@ -10,11 +10,9 @@ public abstract class Player {
     /**
      * default constructor for any player
      * @param name
-     * @param role
      */
-    protected Player(String name, String role){
+    protected Player(String name){
         this.name = name;
-        this.role = role;
     }
 
     /**
