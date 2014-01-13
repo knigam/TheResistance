@@ -43,6 +43,7 @@ public class NormalGame extends Game {
                 players[i] = new SpyPlayer(playerNames[i]);
             else
                 players[i] = new ResistancePlayer(playerNames[i]);
+            System.out.println("Player Name: " + players[i].name + " Role: " + players[i].role);
         }
     }
 

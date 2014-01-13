@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.os.Build;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -30,11 +31,12 @@ import java.util.List;
  */
 public class MainGame extends ActionBarActivity {
     private Spinner gameTypeSpinner, numPlayersSpinner;
-    List<String> gameTypes;
-    List<Integer> numPlayersList;
-    int numPlayers;
-    String gameType;
-    Game game;
+    private List<String> gameTypes;
+    private List<Integer> numPlayersList;
+    private int numPlayers;
+    private String gameType;
+    private Game game;
+    private ArrayList<EditText> textViewList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +70,7 @@ public class MainGame extends ActionBarActivity {
     private void generatePlayerCreationView(){
         setContentView(R.layout.player_creation);
         LinearLayout container = (LinearLayout) findViewById(R.id.namePlayerView);
-        ArrayList<EditText> textViewList = new ArrayList<EditText>();
+        textViewList = new ArrayList<EditText>();
         for(int i = 0; i < game.players.length; i++){
             EditText text = new EditText(this);
             text.setHint("Player " + (i + 1) + " name");
@@ -76,8 +78,28 @@ public class MainGame extends ActionBarActivity {
             text.setTextSize(25);
             textViewList.add(text);
             container.addView(text);
-
         }
+        Button startGameBtn = new Button(this);
+        startGameBtn.setText("Start Game");
+        startGameBtn.setTextSize(25);
+        startGameBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String[] playerNames = new String[numPlayers];
+                int i;
+                for(i = 0; i < numPlayers; i++){
+                    if(!textViewList.get(i).getText().equals(""))
+                        playerNames[i] = (textViewList.get(i).getText().toString());
+                    else
+                        break;
+                }
+                if(i != numPlayers)
+                    Toast.makeText(getApplicationContext(), "Make sure each player has a name.", Toast.LENGTH_SHORT).show();
+                else
+                    game.createPlayerTypes(playerNames);
+            }
+        });
+        container.addView(startGameBtn);
     }
 
     /**
