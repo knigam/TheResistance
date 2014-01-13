@@ -45,7 +45,7 @@ public class MainScreen extends ActionBarActivity {
      * @param view
      */
     public void loadGameOnClick(View view){
-
+        //TODO
     }
 
     /**
@@ -53,7 +53,7 @@ public class MainScreen extends ActionBarActivity {
      * @param view
      */
     public void customGameOnClick(View view){
-
+        //TODO
     }
 
     /*

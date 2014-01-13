@@ -1,6 +1,8 @@
 package com.keonasoft.resistance;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
@@ -20,9 +22,12 @@ public class NormalGame extends Game {
 
     }
 
-    @Override
+    /**
+     * randomly selects the players which will be spies for the round and creates the players for the game
+     * @param playerNames
+     */
     protected void createPlayerTypes(String[] playerNames) {
-        Set spyPlayers = new Collections.emptySet();
+        List spyPlayers = new ArrayList();
         Random rand = new Random();
 
         for(int i = 0; i < numSpies; i++){

@@ -11,12 +11,12 @@ public class SpyPlayer extends Player {
     }
 
     @Override
-    protected R.layout viewRole() {
-        return null;
+    protected int viewRole() {
+        return 0;
     }
 
     @Override
-    protected R.layout viewAcceptOrDecline() {
-        return null;
+    protected int viewAcceptOrDecline() {
+        return 0;
     }
 }

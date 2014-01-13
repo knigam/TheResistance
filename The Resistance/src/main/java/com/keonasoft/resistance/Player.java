@@ -19,11 +19,11 @@ public abstract class Player {
      * this will display the player's current role and additional game details they must know
      * based on their role in the game
      */
-    protected abstract R.layout viewRole();
+    protected abstract int viewRole();
 
     /**
      * This displays the screen which allows players to either accept or decline a mission
      * they are put on based on the limitations of their role
      */
-    protected abstract R.layout viewAcceptOrDecline();
+    protected abstract int viewAcceptOrDecline();
 }

@@ -12,9 +12,16 @@ import android.view.ViewGroup;
 import android.os.Build;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +34,7 @@ public class MainGame extends ActionBarActivity {
     List<Integer> numPlayersList;
     int numPlayers;
     String gameType;
+    Game game;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +55,6 @@ public class MainGame extends ActionBarActivity {
      * @param view
      */
     public void defaultOptionNextOnClick(View view){
-        Game game;
         //Use if/else if statements to determine which game type to play
         if (gameType.equals(gameTypes.get(0))){ //This is a normal game
                 game = new NormalGame(numPlayers);
@@ -55,6 +62,22 @@ public class MainGame extends ActionBarActivity {
         else
             game = new NormalGame(numPlayers);
 
+        generatePlayerCreationView();
+    }
+
+    private void generatePlayerCreationView(){
+        setContentView(R.layout.player_creation);
+        LinearLayout container = (LinearLayout) findViewById(R.id.namePlayerView);
+        ArrayList<EditText> textViewList = new ArrayList<EditText>();
+        for(int i = 0; i < game.players.length; i++){
+            EditText text = new EditText(this);
+            text.setHint("Player " + (i + 1) + " name");
+            text.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            text.setTextSize(25);
+            textViewList.add(text);
+            container.addView(text);
+
+        }
     }
 
     /**
