@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:text="New Custom Game"
         android:id="@+id/customGameBtn"
-        android:onClick="newGameOnClick"
+        android:onClick="customGameOnClick"
         android:layout_above="@+id/loadGameBtn"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />

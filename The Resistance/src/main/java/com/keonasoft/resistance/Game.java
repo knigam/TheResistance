@@ -10,6 +10,9 @@ public abstract class Game {
     protected int[] requiredAgents; //this is how many agents must go on each mission
     protected int[] numSpiesToFail; //the number of spies which must fail for a mission to fail
     protected int numMissions;
+    protected int[] missionSuccess = new int[] {0,0,0,0,0}; //-1 means mission failed, 0 means mission hasn't started, 1 means succeeded
+    protected int currRoundNum = 0;
+    protected int currNumFails = 0; //The number of spies who chose to decline the mission
 
     /**
      * constructor for a game with predefined values based on number of players

@@ -1,5 +1,6 @@
 package com.keonasoft.resistance;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -30,7 +31,12 @@ public class MainScreen extends ActionBarActivity {
         }*/
     }
 
+    public void newGameOnClick(View view){
+        Intent intent = new Intent(MainScreen.this, MainGame.class);
+        MainScreen.this.startActivity(intent);
+    }
 
+    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         
@@ -51,7 +57,7 @@ public class MainScreen extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
- /*   *//**
+   *//**
      * A placeholder fragment containing a simple view.
      *//*
     public static class PlaceholderFragment extends Fragment {
