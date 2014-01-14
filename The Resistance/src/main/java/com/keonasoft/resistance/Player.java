@@ -6,6 +6,7 @@ package com.keonasoft.resistance;
 public abstract class Player {
     protected String name;
     protected String role;
+    protected boolean canReject;
 
     /**
      * default constructor for any player
@@ -15,17 +16,11 @@ public abstract class Player {
         this.name = name;
     }
 
+    /**
+     * Allows certain types of players to have a details section which shows when players view their
+     * role
+     * @param players
+     * @return
+     */
     protected abstract String getDetails(Player[] players);
-
-    /**
-     * this will display the player's current role and additional game details they must know
-     * based on their role in the game
-     */
-    protected abstract int viewRole();
-
-    /**
-     * This displays the screen which allows players to either accept or decline a mission
-     * they are put on based on the limitations of their role
-     */
-    protected abstract int viewVote();
 }

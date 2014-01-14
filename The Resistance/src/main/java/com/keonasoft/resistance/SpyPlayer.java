@@ -8,6 +8,7 @@ public class SpyPlayer extends Player {
     protected SpyPlayer(String name){
         super(name);
         role = "Spy";
+        canReject = true;
     }
 
     @Override
@@ -20,15 +21,5 @@ public class SpyPlayer extends Player {
             }
         }
         return sb.toString();
-    }
-
-    @Override
-    protected int viewRole() {
-        return 0;
-    }
-
-    @Override
-    protected int viewVote() {
-        return 0;
     }
 }
