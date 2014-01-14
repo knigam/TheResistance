@@ -111,9 +111,10 @@ public class MainGame extends ActionBarActivity {
 
     /**
      * this calls the showPlayerRoles method in the Game object while passing this activity to the Game
+     * in order to allow players to view their roles
      */
     private void showPlayerRoles(){
-        game.showPlayerRoles(0);
+        game.showPlayerRoles(0, new Player[0]);
     }
 
     /**

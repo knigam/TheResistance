@@ -19,6 +19,7 @@ public abstract class Game {
     protected int[] missionSuccess = new int[] {0,0,0,0,0}; //-1 means mission failed, 0 means mission hasn't started, 1 means succeeded
     protected int currRoundNum = 0;
     protected int currNumFails = 0; //The number of spies who chose to decline the mission
+    protected int currCommander = 0;
     protected Player[] players;
     protected ActionBarActivity activity;
 
@@ -96,22 +97,45 @@ public abstract class Game {
         this.players = players;
     }
 
-    protected void showPlayerRoles(int playerNum){
+    /**
+     * Sets up the screen which hides player information such as role and voting details
+     * @param playerNum the index of the current player as listed in array players
+     * @param playersVoting Players which are voting on mission. If empty, show player roles
+     */
+    protected void showPlayerRoles(int playerNum, Player[] playersVoting){
         final int PLAYER_NUM = playerNum;
+        final Player[] PLAYERS_VOTING = playersVoting;
         activity.setContentView(R.layout.player_view);
-        TextView hiddenNameTextView = (TextView) activity.findViewById(R.id.playerNameTextView);
-        Button showHiddenBtn = (Button) activity.findViewById(R.id.acceptBtn);
+        TextView playerNameTextView = (TextView) activity.findViewById(R.id.playerNameTextView);
+        Button acceptBtn = (Button) activity.findViewById(R.id.acceptBtn);
 
-        hiddenNameTextView.setText(players[playerNum].name);
-        showHiddenBtn.setText("Hold to View Role");
-        showHiddenBtn.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                viewRole(PLAYER_NUM);
-                return false;
-            }
-        });
+        if(playersVoting.length == 0){
+            playerNameTextView.setText(players[playerNum].name);
+            acceptBtn.setText("Hold to View Role");
+            acceptBtn.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    viewRole(PLAYER_NUM);
+                    return false;
+                }
+            });
+        }
+        else{
+            playerNameTextView.setText(playersVoting[playerNum].name);
+            acceptBtn.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    voteOnMission(PLAYER_NUM, PLAYERS_VOTING);
+                    return false;
+                }
+            });
+        }
     }
+
+    /**
+     * sets up screen so players can view their role discretely
+     * @param playerNum
+     */
     private void viewRole(int playerNum){
         final int PLAYER_NUM = playerNum;
         TextView roleTextView = (TextView) activity.findViewById(R.id.roleTextView);
@@ -129,9 +153,53 @@ public abstract class Game {
             @Override
             public boolean onLongClick(View v) {
                 if(PLAYER_NUM + 1 < players.length)
-                    showPlayerRoles(PLAYER_NUM + 1);
+                    showPlayerRoles(PLAYER_NUM + 1, new Player[0]);
                 else
                     playGame();
+                return false;
+            }
+        });
+    }
+
+    /**
+     * Allows players put on missions to vote to either accept or decline the mission
+     * @param playerNum
+     */
+    private void voteOnMission(int playerNum, Player[] playersVoting){
+        final int PLAYER_NUM = playerNum;
+        final Player[] PLAYERS_VOTING = playersVoting;
+        TextView roleTextView = (TextView) activity.findViewById(R.id.roleTextView);
+        TextView playerRoleTextView = (TextView) activity.findViewById(R.id.playerRoleTextView);
+        TextView detailsTextView = (TextView) activity.findViewById(R.id.detailsTextView);
+        Button acceptBtn = (Button) activity.findViewById(R.id.acceptBtn);
+        Button rejectBtn = (Button) activity.findViewById(R.id.rejectBtn);
+
+        roleTextView.setVisibility(1);
+        playerRoleTextView.setVisibility(1);
+        detailsTextView.setVisibility(1);
+
+        //This allows rejection button to be visible and clickable to Players who can reject
+        if(players[playerNum].canReject){
+            rejectBtn.setVisibility(1);
+            rejectBtn.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    currNumFails++;
+                    if(PLAYER_NUM + 1 < PLAYERS_VOTING.length)
+                        showPlayerRoles(PLAYER_NUM + 1, PLAYERS_VOTING);
+                    return false;
+                }
+            });
+        }
+
+        playerRoleTextView.setText(players[playerNum].role);
+        detailsTextView.setText(players[playerNum].getDetails(players));
+
+        acceptBtn.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if(PLAYER_NUM + 1 < PLAYERS_VOTING.length)
+                    showPlayerRoles(PLAYER_NUM + 1, PLAYERS_VOTING);
                 return false;
             }
         });

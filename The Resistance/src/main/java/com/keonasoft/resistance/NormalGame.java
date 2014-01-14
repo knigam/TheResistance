@@ -15,6 +15,8 @@ import java.util.Set;
  */
 public class NormalGame extends Game {
 
+    protected int numResistanceWins = 0, numSpyWins = 0;
+
     /**
      * creates a game based on default play options
      * @param numPlayers
@@ -43,7 +45,29 @@ public class NormalGame extends Game {
      * This game types implementation of how to play the game
      */
     protected void playGame() {
-        System.out.println("LET THE GAMES BEGIN!!");
+        if(numResistanceWins < 3 && numSpyWins < 3 && currRoundNum < 5){
+            activity.setContentView(R.layout.setup_mission);
+
+            isMissionSuccess();
+        }
+        else;
+            //TODO end game
+    }
+
+    /**
+     * determines whether the mission was a success or not and increments the current round
+     */
+    protected void isMissionSuccess(){
+        if(currNumFails >= numSpiesToFail[currRoundNum]){
+            missionSuccess[currRoundNum] -= currNumFails;
+            numSpyWins++;
+        }
+        else{
+            missionSuccess[currRoundNum] += currNumFails;
+            numResistanceWins++;
+        }
+        currNumFails = 0;
+        currRoundNum++;
     }
 
     /**
