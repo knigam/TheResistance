@@ -1,5 +1,12 @@
 package com.keonasoft.resistance;
 
+import android.support.v7.app.ActionBarActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
 /**
  * Created by kushal on 1/12/14.
  */
@@ -13,12 +20,14 @@ public abstract class Game {
     protected int currRoundNum = 0;
     protected int currNumFails = 0; //The number of spies who chose to decline the mission
     protected Player[] players;
+    protected ActionBarActivity activity;
 
     /**
      * constructor for a game with predefined values based on number of players
      * @param numPlayers
      */
-    protected Game(int numPlayers){
+    protected Game(int numPlayers, ActionBarActivity activity){
+        this.activity = activity;
         players = new Player[numPlayers];
         numMissions = 5;
 
@@ -69,23 +78,64 @@ public abstract class Game {
      * @param numSpiesToFail
      * @param numMissions
      */
-    protected Game(int numPlayers, int numResistance, int numSpies, int[] requiredAgents, int[] numSpiesToFail, int numMissions){
+    protected Game(int numPlayers, int numResistance, int numSpies, int[] requiredAgents, int[] numSpiesToFail, int numMissions, ActionBarActivity activity){
         players = new Player[numPlayers];
         this.numResistance = numResistance;
         this.numSpies = numSpies;
         this.requiredAgents = requiredAgents;
         this.numSpiesToFail = numSpiesToFail;
         this.numMissions = numMissions;
+        this.activity = activity;
     }
 
     /**
      * setter method for players
      * @param players
      */
-    public void setPlayers(Player[] players) {
+    protected void setPlayers(Player[] players) {
         this.players = players;
     }
 
+    protected void showPlayerRoles(int playerNum){
+        final int PLAYER_NUM = playerNum;
+        activity.setContentView(R.layout.player_view);
+        TextView hiddenNameTextView = (TextView) activity.findViewById(R.id.playerNameTextView);
+        Button showHiddenBtn = (Button) activity.findViewById(R.id.acceptBtn);
+
+        hiddenNameTextView.setText(players[playerNum].name);
+        showHiddenBtn.setText("Hold to View Role");
+        showHiddenBtn.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                viewRole(PLAYER_NUM);
+                return false;
+            }
+        });
+    }
+    private void viewRole(int playerNum){
+        final int PLAYER_NUM = playerNum;
+        TextView roleTextView = (TextView) activity.findViewById(R.id.roleTextView);
+        TextView playerRoleTextView = (TextView) activity.findViewById(R.id.playerRoleTextView);
+        TextView detailsTextView = (TextView) activity.findViewById(R.id.detailsTextView);
+        Button acceptBtn = (Button) activity.findViewById(R.id.acceptBtn);
+
+        roleTextView.setVisibility(1);
+        playerRoleTextView.setVisibility(1);
+        playerRoleTextView.setText(players[playerNum].role);
+
+        detailsTextView.setVisibility(1);
+        detailsTextView.setText(players[playerNum].getDetails(players));
+        acceptBtn.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if(PLAYER_NUM + 1 < players.length)
+                    showPlayerRoles(PLAYER_NUM + 1);
+                else
+                    playGame();
+                return false;
+            }
+        });
+    }
     protected abstract void playGame();
     protected abstract void createPlayerTypes(String[] playerNames);
 }

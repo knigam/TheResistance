@@ -1,5 +1,9 @@
 package com.keonasoft.resistance;
 
+import android.app.Activity;
+import android.support.v7.app.ActionBarActivity;
+import android.view.View;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -11,15 +15,35 @@ import java.util.Set;
  */
 public class NormalGame extends Game {
 
-    public NormalGame(int numPlayers){
-        super(numPlayers);
+    /**
+     * creates a game based on default play options
+     * @param numPlayers
+     * @param activity
+     */
+    public NormalGame(int numPlayers, ActionBarActivity activity){
+        super(numPlayers, activity);
     }
-    public NormalGame(int numPlayers, int numResistance, int numSpies, int[] requiredAgents, int[] numSpiesToFail, int numMissions){
-        super(numPlayers, numResistance, numSpies, requiredAgents, numSpiesToFail, numMissions);
-    }
-    @Override
-    protected void playGame() {
 
+    /**
+     * creates a custom game
+     * @param numPlayers
+     * @param numResistance
+     * @param numSpies
+     * @param requiredAgents
+     * @param numSpiesToFail
+     * @param numMissions
+     * @param activity
+     */
+    public NormalGame(int numPlayers, int numResistance, int numSpies, int[] requiredAgents, int[] numSpiesToFail, int numMissions, ActionBarActivity activity){
+        super(numPlayers, numResistance, numSpies, requiredAgents, numSpiesToFail, numMissions, activity);
+    }
+
+    @Override
+    /**
+     * This game types implementation of how to play the game
+     */
+    protected void playGame() {
+        System.out.println("LET THE GAMES BEGIN!!");
     }
 
     /**
@@ -43,8 +67,6 @@ public class NormalGame extends Game {
                 players[i] = new SpyPlayer(playerNames[i]);
             else
                 players[i] = new ResistancePlayer(playerNames[i]);
-            System.out.println("Player Name: " + players[i].name + " Role: " + players[i].role);
         }
     }
-
 }

@@ -59,14 +59,19 @@ public class MainGame extends ActionBarActivity {
     public void defaultOptionNextOnClick(View view){
         //Use if/else if statements to determine which game type to play
         if (gameType.equals(gameTypes.get(0))){ //This is a normal game
-                game = new NormalGame(numPlayers);
+                game = new NormalGame(numPlayers, this);
         }
         else
-            game = new NormalGame(numPlayers);
+            game = new NormalGame(numPlayers, this);
 
         generatePlayerCreationView();
     }
 
+    /**
+     * This method creates the screen allowing input for player names, then it checks to see
+     * if each player has a name. After the start game button is pressed, it adds the players to the
+     * Game object and calls Game.startGame()
+     */
     private void generatePlayerCreationView(){
         setContentView(R.layout.player_creation);
         LinearLayout container = (LinearLayout) findViewById(R.id.namePlayerView);
@@ -88,18 +93,27 @@ public class MainGame extends ActionBarActivity {
                 String[] playerNames = new String[numPlayers];
                 int i;
                 for(i = 0; i < numPlayers; i++){
-                    if(!textViewList.get(i).getText().equals(""))
+                    if(!textViewList.get(i).getText().equals(textViewList.get(i).getHint()))
                         playerNames[i] = (textViewList.get(i).getText().toString());
                     else
                         break;
                 }
                 if(i != numPlayers)
-                    Toast.makeText(getApplicationContext(), "Make sure each player has a name.", Toast.LENGTH_SHORT).show();
-                else
+                    Toast.makeText(getApplicationContext(), "Make sure each player has a name.", Toast.LENGTH_SHORT).show(); //TODO fix this
+                else{
                     game.createPlayerTypes(playerNames);
+                    showPlayerRoles();
+                }
             }
         });
         container.addView(startGameBtn);
+    }
+
+    /**
+     * this calls the showPlayerRoles method in the Game object while passing this activity to the Game
+     */
+    private void showPlayerRoles(){
+        game.showPlayerRoles(0);
     }
 
     /**

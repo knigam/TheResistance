@@ -15,6 +15,8 @@ public abstract class Player {
         this.name = name;
     }
 
+    protected abstract String getDetails(Player[] players);
+
     /**
      * this will display the player's current role and additional game details they must know
      * based on their role in the game
@@ -25,5 +27,5 @@ public abstract class Player {
      * This displays the screen which allows players to either accept or decline a mission
      * they are put on based on the limitations of their role
      */
-    protected abstract int viewAcceptOrDecline();
+    protected abstract int viewVote();
 }

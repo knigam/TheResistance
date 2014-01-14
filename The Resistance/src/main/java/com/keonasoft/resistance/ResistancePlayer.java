@@ -11,12 +11,17 @@ public class ResistancePlayer extends Player {
     }
 
     @Override
+    protected String getDetails(Player[] players) {
+        return "Accept every mission. Don't be scummy. Win the game.";
+    }
+
+    @Override
     protected int viewRole() {
         return 0;
     }
 
     @Override
-    protected int viewAcceptOrDecline() {
+    protected int viewVote() {
         return 0;
     }
 }

@@ -11,12 +11,24 @@ public class SpyPlayer extends Player {
     }
 
     @Override
+    protected String getDetails(Player[] players) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Spies: ");
+        for(Player p : players){
+            if(p.role.equals(this.role)){
+                sb.append(p.name + ", ");
+            }
+        }
+        return sb.toString();
+    }
+
+    @Override
     protected int viewRole() {
         return 0;
     }
 
     @Override
-    protected int viewAcceptOrDecline() {
+    protected int viewVote() {
         return 0;
     }
 }
