@@ -6,22 +6,37 @@
     android:weightSum="1">
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Commander:"
-        android:textSize="25dp"
-        android:id="@+id/textView" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:id="@+id/missionImageContainer"></LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:textSize="25dp"
-        android:id="@+id/textView2" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:id="@+id/missionDetailsContainer"></LinearLayout>
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Commander: "
+            android:textSize="25dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Commander Name"
+            android:textSize="25dp"
+            android:id="@+id/currCommanderTextView" />
+    </LinearLayout>
     <ListView
         android:layout_width="match_parent"
         android:layout_height="384dp"
@@ -51,4 +66,5 @@
             android:id="@+id/button2"
             android:layout_weight="0.5" />
     </LinearLayout>
+
 </LinearLayout>

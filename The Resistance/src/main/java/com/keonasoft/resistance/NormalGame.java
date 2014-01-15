@@ -2,7 +2,11 @@ package com.keonasoft.resistance;
 
 import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,7 +51,7 @@ public class NormalGame extends Game {
     protected void playGame() {
         if(numResistanceWins < 3 && numSpyWins < 3 && currRoundNum < 5){
             activity.setContentView(R.layout.setup_mission);
-
+            //setUpMissionDetails();
             isMissionSuccess();
         }
         else;

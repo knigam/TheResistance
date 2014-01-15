@@ -1,8 +1,11 @@
 package com.keonasoft.resistance;
 
 import android.support.v7.app.ActionBarActivity;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -16,7 +19,7 @@ public abstract class Game {
     protected int[] requiredAgents; //this is how many agents must go on each mission
     protected int[] numSpiesToFail; //the number of spies which must fail for a mission to fail
     protected int numMissions;
-    protected int[] missionSuccess = new int[] {0,0,0,0,0}; //-1 means mission failed, 0 means mission hasn't started, 1 means succeeded
+    protected int[] missionSuccess; //-1 means mission failed, 0 means mission hasn't started, 1 means succeeded
     protected int currRoundNum = 0;
     protected int currNumFails = 0; //The number of spies who chose to decline the mission
     protected int currCommander = 0;
@@ -31,7 +34,7 @@ public abstract class Game {
         this.activity = activity;
         players = new Player[numPlayers];
         numMissions = 5;
-
+        missionSuccess = new int[numMissions];
 
         //This sets up default values from game rules based on number of players
         switch(numPlayers){
@@ -87,6 +90,7 @@ public abstract class Game {
         this.numSpiesToFail = numSpiesToFail;
         this.numMissions = numMissions;
         this.activity = activity;
+        this.missionSuccess = new int[numMissions];
     }
 
     /**
@@ -149,6 +153,8 @@ public abstract class Game {
 
         detailsTextView.setVisibility(1);
         detailsTextView.setText(players[playerNum].getDetails(players));
+
+        acceptBtn.setText("Hold to Hide Role");
         acceptBtn.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -203,6 +209,32 @@ public abstract class Game {
                 return false;
             }
         });
+    }
+
+    /**
+     * populates mission images and details for top of setup_mission layout
+     */
+    protected void setUpMissionDetails(){
+        LinearLayout missionImageContainer = (LinearLayout) activity.findViewById(R.id.missionImageContainer);
+        LinearLayout missionDetailsContainer = (LinearLayout) activity.findViewById(R.id.missionDetailsContainer);
+        for(int i = 0; i < numMissions; i++){
+            ImageView missionImage = new ImageView(activity);
+            missionImage.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, (float)(1.00/numMissions)));
+            TextView missionDetails = new TextView(activity);
+            missionDetails.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, (float)(1.00/numMissions)));
+            missionDetails.setGravity(Gravity.CENTER);
+            missionDetails.setText(Math.abs(missionSuccess[i]));
+
+            if(i > 0){  //Resistance won this round
+
+            }
+            else if(i < 0){  //Spies won this round
+
+            }
+            else{ //round hasn't started yet
+                missionDetails.setText(requiredAgents[i]);
+            }
+        }
     }
     protected abstract void playGame();
     protected abstract void createPlayerTypes(String[] playerNames);
