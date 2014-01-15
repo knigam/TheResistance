@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -51,8 +53,18 @@ public class NormalGame extends Game {
     protected void playGame() {
         if(numResistanceWins < 3 && numSpyWins < 3 && currRoundNum < 5){
             activity.setContentView(R.layout.setup_mission);
-            //setUpMissionDetails();
-            isMissionSuccess();
+            ListView playerNameListView = (ListView) activity.findViewById(R.id.playerNameListView);
+
+            setUpMissionDetails();
+            List<String> playerNames = new ArrayList<String>();
+            for(Player p : players) playerNames.add(p.name);
+
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(activity,
+                    android.R.layout.simple_list_item_multiple_choice, playerNames);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            playerNameListView.setAdapter(dataAdapter);
+
+            //isMissionSuccess();
         }
         else;
             //TODO end game
@@ -62,10 +74,12 @@ public class NormalGame extends Game {
      * determines whether the mission was a success or not and increments the current round
      */
     protected void isMissionSuccess(){
+        //If the required number of spies to fail or more fail, then subtract that number in missionSuccess
         if(currNumFails >= numSpiesToFail[currRoundNum]){
             missionSuccess[currRoundNum] -= currNumFails;
             numSpyWins++;
         }
+        //If less than required number of spies fail, add that number so players know how many spies failed
         else{
             missionSuccess[currRoundNum] += currNumFails;
             numResistanceWins++;

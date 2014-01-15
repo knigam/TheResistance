@@ -217,23 +217,29 @@ public abstract class Game {
     protected void setUpMissionDetails(){
         LinearLayout missionImageContainer = (LinearLayout) activity.findViewById(R.id.missionImageContainer);
         LinearLayout missionDetailsContainer = (LinearLayout) activity.findViewById(R.id.missionDetailsContainer);
+        for(int j : requiredAgents){
+            System.out.println(requiredAgents[j]+"");
+        }
         for(int i = 0; i < numMissions; i++){
             ImageView missionImage = new ImageView(activity);
             missionImage.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, (float)(1.00/numMissions)));
             TextView missionDetails = new TextView(activity);
             missionDetails.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, (float)(1.00/numMissions)));
             missionDetails.setGravity(Gravity.CENTER);
-            missionDetails.setText(Math.abs(missionSuccess[i]));
+            missionDetails.setText(Math.abs(missionSuccess[i]) + "");
 
-            if(i > 0){  //Resistance won this round
+            if(missionSuccess[i] > 0){  //Resistance won this round
 
             }
-            else if(i < 0){  //Spies won this round
+            else if(missionSuccess[i] < 0){  //Spies won this round
 
             }
             else{ //round hasn't started yet
-                missionDetails.setText(requiredAgents[i]);
+                missionDetails.setText(requiredAgents[i] + "");
+                System.out.println(requiredAgents[i] + "");
             }
+            missionImageContainer.addView(missionImage);
+            missionDetailsContainer.addView(missionDetails);
         }
     }
     protected abstract void playGame();
