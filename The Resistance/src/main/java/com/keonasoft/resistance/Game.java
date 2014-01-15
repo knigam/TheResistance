@@ -29,6 +29,7 @@ public abstract class Game {
     protected int currCommander = 0;
     protected Player[] players;
     protected ActionBarActivity activity;
+    protected ArrayList agentsSelectedForMission = new ArrayList();
 
     /**
      * constructor for a game with predefined values based on number of players

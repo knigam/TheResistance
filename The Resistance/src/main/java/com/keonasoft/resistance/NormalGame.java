@@ -4,12 +4,14 @@ import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -69,20 +71,35 @@ public class NormalGame extends Game {
                     android.R.layout.simple_list_item_multiple_choice, playerNames);
             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             playerNameListView.setAdapter(dataAdapter);
+            playerNameListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    String nameSelected = (String) (parent.getItemAtPosition(position));
+                    if(agentsSelectedForMission.contains(nameSelected))
+                        agentsSelectedForMission.remove(nameSelected);
+                    else
+                        agentsSelectedForMission.add(nameSelected);
+                    playGame();
+
+                }
+            });
 
             Button acceptCommanderChoiceBtn = (Button) activity.findViewById(R.id.acceptCommanderChoiceBtn);
             acceptCommanderChoiceBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ListView playerNameListView = (ListView) v.findViewById(R.id.playerNameListView);
-                    //if(playerNameListView.getCheckedItemCount() == requiredAgents[currRoundNum]){
-                        /*Player[] playersVoting = new Player[requiredAgents[currRoundNum]];
+                    if(agentsSelectedForMission.size() == requiredAgents[currRoundNum]){
+                        Player[] selectedPlayers = new Player[requiredAgents[currRoundNum]];
+                        int j = 0;
                         for(Player p : players){
-                            if();
-                        }*/
-                        //System.out.println(playerNameListView.getCheckedItemPositions().toString());
-                        showPlayerRoles(0, players);//playersVoting);
-                    //}
+                            if(agentsSelectedForMission.contains(p.name)){
+                                selectedPlayers[j] = p;
+                                j++;
+                            }
+                        }
+                    }
+                    else
+                        Toast.makeText(activity.getApplicationContext(), "Make sure each player has a name.", Toast.LENGTH_SHORT).show();
                 }
             });
 
