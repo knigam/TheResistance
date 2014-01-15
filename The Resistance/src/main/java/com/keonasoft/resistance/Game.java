@@ -3,12 +3,16 @@ package com.keonasoft.resistance;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by kushal on 1/12/14.
@@ -193,6 +197,8 @@ public abstract class Game {
                     currNumFails++;
                     if(PLAYER_NUM + 1 < PLAYERS_VOTING.length)
                         showPlayerRoles(PLAYER_NUM + 1, PLAYERS_VOTING);
+                    else
+                        isMissionSuccess();
                     return false;
                 }
             });
@@ -206,42 +212,14 @@ public abstract class Game {
             public boolean onLongClick(View v) {
                 if(PLAYER_NUM + 1 < PLAYERS_VOTING.length)
                     showPlayerRoles(PLAYER_NUM + 1, PLAYERS_VOTING);
+                else
+                    isMissionSuccess();
                 return false;
             }
         });
     }
 
-    /**
-     * populates mission images and details for top of setup_mission layout
-     */
-    protected void setUpMissionDetails(){
-        LinearLayout missionImageContainer = (LinearLayout) activity.findViewById(R.id.missionImageContainer);
-        LinearLayout missionDetailsContainer = (LinearLayout) activity.findViewById(R.id.missionDetailsContainer);
-        for(int j : requiredAgents){
-            System.out.println(requiredAgents[j]+"");
-        }
-        for(int i = 0; i < numMissions; i++){
-            ImageView missionImage = new ImageView(activity);
-            missionImage.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, (float)(1.00/numMissions)));
-            TextView missionDetails = new TextView(activity);
-            missionDetails.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, (float)(1.00/numMissions)));
-            missionDetails.setGravity(Gravity.CENTER);
-            missionDetails.setText(Math.abs(missionSuccess[i]) + "");
-
-            if(missionSuccess[i] > 0){  //Resistance won this round
-
-            }
-            else if(missionSuccess[i] < 0){  //Spies won this round
-
-            }
-            else{ //round hasn't started yet
-                missionDetails.setText(requiredAgents[i] + "");
-                System.out.println(requiredAgents[i] + "");
-            }
-            missionImageContainer.addView(missionImage);
-            missionDetailsContainer.addView(missionDetails);
-        }
-    }
+    protected abstract  void isMissionSuccess();
     protected abstract void playGame();
     protected abstract void createPlayerTypes(String[] playerNames);
 }

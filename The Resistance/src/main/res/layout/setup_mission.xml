@@ -56,14 +56,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Accept"
-            android:id="@+id/button"
+            android:id="@+id/acceptCommanderChoiceBtn"
             android:layout_weight="0.50" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Reject"
-            android:id="@+id/button2"
+            android:id="@+id/rejectCommanderChoiceBtn"
             android:layout_weight="0.5" />
     </LinearLayout>
 

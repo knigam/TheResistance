@@ -5,6 +5,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -51,11 +52,16 @@ public class NormalGame extends Game {
      * This game types implementation of how to play the game
      */
     protected void playGame() {
-        if(numResistanceWins < 3 && numSpyWins < 3 && currRoundNum < 5){
+        int minToWin = (numMissions/2) + 1;
+        if(numResistanceWins < minToWin && numSpyWins < minToWin){
             activity.setContentView(R.layout.setup_mission);
-            ListView playerNameListView = (ListView) activity.findViewById(R.id.playerNameListView);
-
             setUpMissionDetails();
+
+            TextView currCommanderTextView = (TextView) activity.findViewById(R.id.currCommanderTextView);
+            currCommanderTextView.setText(players[currCommander].name);
+
+            //The following code fills in the multi select ListView with player names
+            ListView playerNameListView = (ListView) activity.findViewById(R.id.playerNameListView);
             List<String> playerNames = new ArrayList<String>();
             for(Player p : players) playerNames.add(p.name);
 
@@ -64,10 +70,60 @@ public class NormalGame extends Game {
             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             playerNameListView.setAdapter(dataAdapter);
 
-            //isMissionSuccess();
+            Button acceptCommanderChoiceBtn = (Button) activity.findViewById(R.id.acceptCommanderChoiceBtn);
+            acceptCommanderChoiceBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ListView playerNameListView = (ListView) v.findViewById(R.id.playerNameListView);
+                    //if(playerNameListView.getCheckedItemCount() == requiredAgents[currRoundNum]){
+                        /*Player[] playersVoting = new Player[requiredAgents[currRoundNum]];
+                        for(Player p : players){
+                            if();
+                        }*/
+                        //System.out.println(playerNameListView.getCheckedItemPositions().toString());
+                        showPlayerRoles(0, players);//playersVoting);
+                    //}
+                }
+            });
+
         }
-        else;
-            //TODO end game
+        else{
+            activity.setContentView(R.layout.game_over_view);
+            TextView winnerTextView = (TextView) activity.findViewById(R.id.winnerTextView);
+            if(numResistanceWins == minToWin)
+                winnerTextView.setText("Resistance Wins");
+            else if(numSpyWins == minToWin)
+                winnerTextView.setText("Spy's Win");
+        }
+    }
+
+    /**
+     * populates mission images and details for top of setup_mission layout
+     */
+    protected void setUpMissionDetails(){
+        LinearLayout missionImageContainer = (LinearLayout) activity.findViewById(R.id.missionImageContainer);
+        LinearLayout missionDetailsContainer = (LinearLayout) activity.findViewById(R.id.missionDetailsContainer);
+
+        for(int i = 0; i < numMissions; i++){
+            ImageView missionImage = new ImageView(activity);
+            missionImage.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, (float)(1.00/numMissions)));
+            TextView missionDetails = new TextView(activity);
+            missionDetails.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, (float)(1.00/numMissions)));
+            missionDetails.setGravity(Gravity.CENTER);
+            missionDetails.setText(Math.abs(missionSuccess[i]) + "");
+
+            if(missionSuccess[i] >= 0 && i < currRoundNum){  //Resistance won this round
+
+            }
+            else if(missionSuccess[i] < 0){  //Spies won this round
+
+            }
+            else{ //round hasn't started yet
+                missionDetails.setText(requiredAgents[i] + "");
+            }
+            missionImageContainer.addView(missionImage);
+            missionDetailsContainer.addView(missionDetails);
+        }
     }
 
     /**
@@ -86,6 +142,7 @@ public class NormalGame extends Game {
         }
         currNumFails = 0;
         currRoundNum++;
+        playGame();
     }
 
     /**
