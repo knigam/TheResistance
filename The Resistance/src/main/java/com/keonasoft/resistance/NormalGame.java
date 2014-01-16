@@ -75,10 +75,12 @@ public class NormalGame extends Game {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     String nameSelected = (String) (parent.getItemAtPosition(position));
+                    System.out.println(agentsSelectedForMission.size());
                     if(agentsSelectedForMission.contains(nameSelected))
                         agentsSelectedForMission.remove(nameSelected);
                     else
                         agentsSelectedForMission.add(nameSelected);
+                    view.setSelected(!view.isSelected());
                     playGame();
 
                 }
@@ -88,6 +90,7 @@ public class NormalGame extends Game {
             acceptCommanderChoiceBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    System.out.println(agentsSelectedForMission.size());
                     if(agentsSelectedForMission.size() == requiredAgents[currRoundNum]){
                         Player[] selectedPlayers = new Player[requiredAgents[currRoundNum]];
                         int j = 0;
@@ -97,12 +100,29 @@ public class NormalGame extends Game {
                                 j++;
                             }
                         }
+                        currCommander++;
+                        showPlayerRoles(0, selectedPlayers);
                     }
                     else
-                        Toast.makeText(activity.getApplicationContext(), "Make sure each player has a name.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity.getApplicationContext(), "You must select " + requiredAgents[currRoundNum] + " players", Toast.LENGTH_SHORT).show();
                 }
             });
 
+            Button rejectCommanderChoiceBtn = (Button) activity.findViewById(R.id.rejectCommanderChoiceBtn);
+            rejectCommanderChoiceBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(agentsSelectedForMission.size() == requiredAgents[currRoundNum]){
+                        if(currCommander == (players.length - 1))
+                            currCommander = 0;
+                        else
+                            currCommander++;
+                        playGame();
+                    }
+                    else
+                        Toast.makeText(activity.getApplicationContext(), "You must select " + requiredAgents[currRoundNum] + " players", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
         else{
             activity.setContentView(R.layout.game_over_view);
