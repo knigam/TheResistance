@@ -59,6 +59,8 @@ public class NormalGame extends Game {
             activity.setContentView(R.layout.setup_mission);
             setUpMissionDetails();
 
+            //makes sure no agents are currently selected when the ListView check boxes reset
+            agentsSelectedForMission.clear();
             TextView currCommanderTextView = (TextView) activity.findViewById(R.id.currCommanderTextView);
             currCommanderTextView.setText(players[currCommander].name);
 
@@ -70,19 +72,16 @@ public class NormalGame extends Game {
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(activity,
                     android.R.layout.simple_list_item_multiple_choice, playerNames);
             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
             playerNameListView.setAdapter(dataAdapter);
             playerNameListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     String nameSelected = (String) (parent.getItemAtPosition(position));
-                    System.out.println(agentsSelectedForMission.size());
                     if(agentsSelectedForMission.contains(nameSelected))
                         agentsSelectedForMission.remove(nameSelected);
                     else
                         agentsSelectedForMission.add(nameSelected);
-                    view.setSelected(!view.isSelected());
-                    playGame();
-
                 }
             });
 
@@ -90,7 +89,6 @@ public class NormalGame extends Game {
             acceptCommanderChoiceBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    System.out.println(agentsSelectedForMission.size());
                     if(agentsSelectedForMission.size() == requiredAgents[currRoundNum]){
                         Player[] selectedPlayers = new Player[requiredAgents[currRoundNum]];
                         int j = 0;
@@ -100,7 +98,7 @@ public class NormalGame extends Game {
                                 j++;
                             }
                         }
-                        currCommander++;
+                        goToNextCommander();
                         showPlayerRoles(0, selectedPlayers);
                     }
                     else
@@ -113,10 +111,7 @@ public class NormalGame extends Game {
                 @Override
                 public void onClick(View v) {
                     if(agentsSelectedForMission.size() == requiredAgents[currRoundNum]){
-                        if(currCommander == (players.length - 1))
-                            currCommander = 0;
-                        else
-                            currCommander++;
+                        goToNextCommander();
                         playGame();
                     }
                     else
@@ -132,6 +127,16 @@ public class NormalGame extends Game {
             else if(numSpyWins == minToWin)
                 winnerTextView.setText("Spy's Win");
         }
+    }
+
+    /**
+     * increments the commander by one, making sure to loop to the first player if necessary
+     */
+    protected void goToNextCommander(){
+        if(currCommander == (players.length - 1))
+            currCommander = 0;
+        else
+            currCommander++;
     }
 
     /**

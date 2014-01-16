@@ -131,6 +131,7 @@ public abstract class Game {
         }
         else{
             playerNameTextView.setText(playersVoting[playerNum].name);
+            acceptBtn.setText("Hold to Vote on Mission");
             acceptBtn.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
@@ -184,6 +185,8 @@ public abstract class Game {
         TextView detailsTextView = (TextView) activity.findViewById(R.id.detailsTextView);
         Button acceptBtn = (Button) activity.findViewById(R.id.acceptBtn);
         Button rejectBtn = (Button) activity.findViewById(R.id.rejectBtn);
+
+        acceptBtn.setText("ACCEPT MISSION");
 
         roleTextView.setVisibility(1);
         playerRoleTextView.setVisibility(1);

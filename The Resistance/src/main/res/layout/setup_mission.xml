@@ -44,7 +44,8 @@
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.92"
         android:choiceMode="multipleChoice"
-        android:clickable="false" />
+        android:clickable="false"
+        android:focusableInTouchMode="false"/>
 
     <LinearLayout
         android:orientation="horizontal"
