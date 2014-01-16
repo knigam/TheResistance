@@ -193,7 +193,7 @@ public abstract class Game {
         detailsTextView.setVisibility(1);
 
         //This allows rejection button to be visible and clickable to Players who can reject
-        if(players[playerNum].canReject){
+        if(playersVoting[playerNum].canReject){
             rejectBtn.setVisibility(1);
             rejectBtn.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
@@ -208,8 +208,8 @@ public abstract class Game {
             });
         }
 
-        playerRoleTextView.setText(players[playerNum].role);
-        detailsTextView.setText(players[playerNum].getDetails(players));
+        playerRoleTextView.setText(playersVoting[playerNum].role);
+        detailsTextView.setText(playersVoting[playerNum].getDetails(players));
 
         acceptBtn.setOnLongClickListener(new View.OnLongClickListener() {
             @Override

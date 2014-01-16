@@ -54,8 +54,8 @@ public class NormalGame extends Game {
      * This game types implementation of how to play the game
      */
     protected void playGame() {
-        int minToWin = (numMissions/2) + 1;
-        if(numResistanceWins < minToWin && numSpyWins < minToWin){
+        int minToWin = (numMissions/2) + 1;  //finds the number of missions needed to win
+        if(numResistanceWins < minToWin && numSpyWins < minToWin){ //determines if the game is over yet
             activity.setContentView(R.layout.setup_mission);
             setUpMissionDetails();
 
@@ -85,6 +85,10 @@ public class NormalGame extends Game {
                 }
             });
 
+            /**
+             * This determines what happens when the commanders mission is accepted
+             * if the correct number is selected, it goes to voting, otherwise it displays a toast
+             */
             Button acceptCommanderChoiceBtn = (Button) activity.findViewById(R.id.acceptCommanderChoiceBtn);
             acceptCommanderChoiceBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -106,6 +110,11 @@ public class NormalGame extends Game {
                 }
             });
 
+            /**
+             * determines what to do if commander choice is rejected
+             * if numselected is correct change commander to next commander and playGame to reset
+             * checks and players Selected
+             */
             Button rejectCommanderChoiceBtn = (Button) activity.findViewById(R.id.rejectCommanderChoiceBtn);
             rejectCommanderChoiceBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
