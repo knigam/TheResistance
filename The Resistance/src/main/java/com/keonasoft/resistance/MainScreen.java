@@ -1,5 +1,6 @@
 package com.keonasoft.resistance;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 
+/**
+ * @author kushal
+ * The first activity the app opens to when the app is started
+ * allows user to choose to start a new game or load a game
+ */
 public class MainScreen extends ActionBarActivity {
 
     @Override
@@ -18,14 +24,39 @@ public class MainScreen extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
 
-        if (savedInstanceState == null) {
+        /*if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
-        }
+        }*/
     }
 
+    /**
+     * Button OnClick listener for newGameBtn
+     * @param view
+     */
+    public void newGameOnClick(View view){
+        Intent intent = new Intent(MainScreen.this, MainGame.class);
+        MainScreen.this.startActivity(intent);
+    }
 
+    /**
+     * Button OnClick listener for loadGameBtn
+     * @param view
+     */
+    public void loadGameOnClick(View view){
+        //TODO
+    }
+
+    /**
+     * Button OnClick listener for customGameBtn
+     * @param view
+     */
+    public void customGameOnClick(View view){
+        //TODO
+    }
+
+    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         
@@ -46,9 +77,9 @@ public class MainScreen extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
+   *//**
      * A placeholder fragment containing a simple view.
-     */
+     *//*
     public static class PlaceholderFragment extends Fragment {
 
         public PlaceholderFragment() {
@@ -60,6 +91,6 @@ public class MainScreen extends ActionBarActivity {
             View rootView = inflater.inflate(R.layout.fragment_main_screen, container, false);
             return rootView;
         }
-    }
+    }*/
 
 }
