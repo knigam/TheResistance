@@ -101,7 +101,7 @@ public class MainGame extends ActionBarActivity {
                         break;
                 }
                 if(i != numPlayers)
-                    Toast.makeText(getApplicationContext(), "Make sure each player has a name.", Toast.LENGTH_SHORT).show(); //TODO fix this
+                    Toast.makeText(getApplicationContext(), "Make sure each player has a name.", Toast.LENGTH_SHORT).show();
                 else{
                     game.createPlayerTypes(playerNames);
                     showPlayerRoles();
@@ -117,6 +117,31 @@ public class MainGame extends ActionBarActivity {
      */
     private void showPlayerRoles(){
         game.showPlayerRoles(0, new Player[0]);
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main_game, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_save) {
+            if(game != null && game.saveEnabled == true){
+                Toast.makeText(getApplicationContext(), "Game Saved!", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+            else{
+                Toast.makeText(getApplicationContext(), "Wait until the end of this round", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**

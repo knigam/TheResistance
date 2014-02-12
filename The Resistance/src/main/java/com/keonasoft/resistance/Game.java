@@ -27,6 +27,8 @@ public abstract class Game {
     protected int currRoundNum = 0;
     protected int currNumFails = 0; //The number of spies who chose to decline the mission
     protected int currCommander = 0;
+    protected boolean saveEnabled = false; //Determines whether or not to activate the save game button
+    protected final String GAME_TYPE = "Game";
     protected Player[] players;
     protected ActionBarActivity activity;
     protected ArrayList agentsSelectedForMission = new ArrayList();
@@ -222,7 +224,6 @@ public abstract class Game {
             }
         });
     }
-
     protected abstract  void isMissionSuccess();
     protected abstract void playGame();
     protected abstract void createPlayerTypes(String[] playerNames);

@@ -25,6 +25,7 @@ import java.util.Set;
 public class NormalGame extends Game {
 
     protected int numResistanceWins = 0, numSpyWins = 0;
+    protected final String GAME_TYPE = "NormalGame";
 
     /**
      * creates a game based on default play options
@@ -54,6 +55,7 @@ public class NormalGame extends Game {
      * This game types implementation of how to play the game
      */
     protected void playGame() {
+        saveEnabled = true; //enable saving during the round set up phase
         int minToWin = (numMissions/2) + 1;  //finds the number of missions needed to win
         if(numResistanceWins < minToWin && numSpyWins < minToWin){ //determines if the game is over yet
             activity.setContentView(R.layout.setup_mission);
@@ -103,6 +105,7 @@ public class NormalGame extends Game {
                             }
                         }
                         goToNextCommander();
+                        saveEnabled = false; //Disable saving while players are voting
                         showPlayerRoles(0, selectedPlayers);
                     }
                     else

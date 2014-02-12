@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.Toast;
 
 /**
  * @author kushal
@@ -53,7 +54,7 @@ public class MainScreen extends ActionBarActivity {
      * @param view
      */
     public void customGameOnClick(View view){
-        //TODO
+        Toast.makeText(getApplicationContext(), "Coming Soon!", Toast.LENGTH_SHORT).show();//TODO
     }
 
     /*
@@ -61,7 +62,7 @@ public class MainScreen extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main_screen, menu);
+        getMenuInflater().inflate(R.menu.main_game, menu);
         return true;
     }
 
