@@ -93,8 +93,10 @@ public class MainGame extends ActionBarActivity {
                 String[] playerNames = new String[numPlayers];
                 int i;
                 for(i = 0; i < numPlayers; i++){
-                    if(!textViewList.get(i).getText().equals(textViewList.get(i).getHint()))
+                    if(textViewList.get(i).getText().toString().length() > 0){
+                        System.out.println(textViewList.get(i).getText());
                         playerNames[i] = (textViewList.get(i).getText().toString());
+                    }
                     else
                         break;
                 }
