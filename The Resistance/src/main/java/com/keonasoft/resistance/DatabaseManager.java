@@ -74,10 +74,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
      * @return
      */
     public static Game saveGame(){
-        Game game;
+        Game game = null;
         try{
-
-
             return game;
         }
         catch (Exception e){

@@ -161,19 +161,21 @@ public class NormalGame extends Game {
         for(int i = 0; i < numMissions; i++){
             ImageView missionImage = new ImageView(activity);
             missionImage.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, (float)(1.00/numMissions)));
+
             TextView missionDetails = new TextView(activity);
             missionDetails.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, (float)(1.00/numMissions)));
             missionDetails.setGravity(Gravity.CENTER);
             missionDetails.setText(Math.abs(missionSuccess[i]) + "");
 
             if(missionSuccess[i] >= 0 && i < currRoundNum){  //Resistance won this round
-
+                missionImage.setImageResource(R.drawable.resistance_logo);
             }
             else if(missionSuccess[i] < 0){  //Spies won this round
-
+                missionImage.setImageResource(R.drawable.spy_logo);
             }
             else{ //round hasn't started yet
                 missionDetails.setText(requiredAgents[i] + "");
+                missionImage.setImageResource(R.drawable.blank_logo);
             }
             missionImageContainer.addView(missionImage);
             missionDetailsContainer.addView(missionDetails);
